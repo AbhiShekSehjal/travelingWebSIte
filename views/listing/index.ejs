@@ -1,23 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layout/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>listing</h1>
-    <form method="get" action="/listing/NEW"><button>create</button></form>
-    <ul>
-        <% for (const list of listing) {%>
-            <li>
-                <a href="/listing/<%= list._id %>">
-                    <%= list.title %>
-            </li>
-            <% } %>
-    </ul>
-</body>
-
-</html>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+            <% for (let list of listing) {%>
+                <a href="/listing/<%= list._id %>" style="text-decoration: none;">
+                    <div class="card">
+                        <img src="<%= list.image.url %>" class="card-img-top" alt="listing image"
+                            style="height: 20rem;">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= list.title %>
+                                </b><br>
+                                &#8377; <%= list.price.toLocaleString("en-IN") %>
+                                    <br>
+                                    <b>
+                                        <%= list.location %>
+                                    </b>
+                                    <%= list.country %>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>

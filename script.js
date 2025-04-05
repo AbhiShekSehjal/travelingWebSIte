@@ -1,9 +1,10 @@
 const express = require("express");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-const app = express();
-const path = require("path");
 const Listing = require("./model/listing");
+const path = require("path");
+const ejsMate = require("ejs-mate");
+const app = express();
 const port = 8080;
 
 app.use(methodOverride("_method"));
@@ -12,6 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.engine("ejs", ejsMate);
 
 main().then(() => {
     console.log("connected to mongoDB");
@@ -22,6 +25,11 @@ main().then(() => {
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/traveling');
 }
+
+//root route
+app.get("/", (req, res) => {
+    res.send("root is working")
+})
 
 //index route
 app.get("/listing", async (req, res) => {
@@ -34,7 +42,7 @@ app.get("/listing/new", (req, res) => {
     res.render("listing/new.ejs");
 });
 
-//create routr
+//create route
 app.post("/listing", async (req, res) => {
     let listing = new Listing(req.body.listing);
     await listing.save();
@@ -73,6 +81,7 @@ app.put("/listing/:id", async (req, res) => {
     res.redirect(`/listing/${id}`)
 })
 
+//listening port
 app.listen(port, () => {
     console.log("server started on port", port);
 })

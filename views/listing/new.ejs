@@ -1,34 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout("/layout/boilerplate.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <form method="post" action="/listing" class="m-4">
+                <h3>Create a <b>new</b> listing</h3>
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="listing[title]" class="form-control" id="name" placeholder="Title">
+                <br>
+                <label for="Description" class="form-label">Description</label>
+                <textarea name="listing[description]" placeholder="Description" role="5" cols="50" class="form-control"
+                    id="Description"></textarea>
+                <br>
+                <label for="Image" class="form-label">Image</label>
+                <input type="text" name="listing[image]" placeholder="Image" class="form-control" id="Image">
+                <br>
+                <label for="price" class="form-label">Price</label>
+                <input type="text" name="listing[price]" placeholder="Price" class="form-control" id="price">
+                <br>
 
-<body>
-    <form method="post" action="/listing">
-        <input type="text" name="listing[title]" placeholder="Title">
-        <br>
-        <br>
-        <textarea name="listing[description]" placeholder="Description" role="5" cols="50"></textarea>
-        <br>
-        <br>
-        <input type="text" name="listing[image]" placeholder="Image">
-        <br>
-        <br>
-        <input type="text" name="listing[price]" placeholder="Price">
-        <br>
-        <br>
-        <input type="text" name="listing[location]" placeholder="Location">
-        <br>
-        <br>
-        <input type="text" name="listing[country]" placeholder="Country">
-        <br>
-        <br>
-        <button>Submit</button>
-    </form>
-</body>
-
-</html>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="location" class="form-label">location</label>
+                        <input type="text" name="listing[location]" placeholder="Location" class="form-control"
+                            id="location">
+                    </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label for="Country" class="form-label">Country</label>
+                        <input type="text" name="listing[country]" placeholder="Country" class="form-control"
+                            id="Country">
+                    </div>
+                </div>
+                <br>
+                <button class="btn">Submit</button>
+            </form>
+        </div>
+    </div>

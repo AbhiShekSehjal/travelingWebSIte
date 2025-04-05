@@ -1,0 +1,110 @@
+body {
+    font-family: "Playfair Display", serif;
+    min-height: 100vh;
+    display: flex;
+    
+    flex-direction: column;
+}
+
+* {
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+/* navbar */
+.navbar {
+    background-color: white;
+}
+
+.nav-link {
+    font-weight: 600 !important;
+}
+
+.navbar-brand i {
+    color: #E63946;
+    font-size: 2rem;
+}
+
+.collapse {
+    background-color: white !important;
+    width: 100% !important;
+}
+
+/* footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(128, 128, 128, 0.351);
+    width: 100%;
+    padding: 15px 0;
+    flex: 1;
+}
+
+.socialLinks a {
+    text-decoration: none;
+}
+
+.socialLinks a i {
+    color: black;
+    font-size: 20px;
+    margin-left: 1rem;
+}
+
+.logoInfo a {
+    text-decoration: none;
+}
+
+.logoInfo p {
+    color: black;
+    margin-top: 1rem;
+}
+
+.otherInfo a {
+    text-decoration: none;
+    color: black;
+    margin-top: 1rem;
+}
+
+.otherInfo a:hover {
+    text-decoration: underline;
+}
+
+/* card */
+.card {
+    border: none !important;
+    padding: 1.5rem !important;
+}
+
+.card-img-top {
+    object-fit: cover;
+    border-radius: 1.5rem !important;
+}
+
+.card-img-overlay:hover {
+    background-color: rgba(255, 255, 255, 0.21);
+    transition: all 0.3s ease;
+}
+
+/* new listing */
+.btn {
+    background-color: #E63946 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.form-control {
+    border: 1px solid rgba(128, 128, 128, 0.644) !important;
+}
+
+/* show listing */
+.showCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn2 {
+    background-color: black !important;
+}
