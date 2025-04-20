@@ -1,26 +1,26 @@
 <% layout("/layout/boilerplate.ejs") %>
-
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-            <% for (let list of listing) {%>
-                <a href="/listing/<%= list._id %>" style="text-decoration: none;">
-                    <div class="card">
-                        <img src="<%= list.image.url %>" class="card-img-top" alt="listing image"
-                            style="height: 20rem;">
-                        <div class="card-img-overlay"></div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <b>
-                                    <%= list.title %>
-                                </b><br>
-                                &#8377; <%= list.price.toLocaleString("en-IN") %>
-                                    <br>
+   
+            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+                <% for (let list of listing) {%>
+                    <a href="/listing/<%= list._id %>" style="text-decoration: none;">
+                        <div class="card">
+                            <img src="<%= list.image.url %>" class="card-img-top" alt="listing image"
+                                style="height: 20rem;">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-body">
+                                <p class="card-text">
                                     <b>
-                                        <%= list.location %>
-                                    </b>
-                                    <%= list.country %>
-                            </p>
+                                        <%= list.title %>
+                                    </b><br>
+                                    &#8377; <%= list.price.toLocaleString("en-IN") %> \Night
+                                        <br>
+                                        <b>
+                                            <%= list.location %>
+                                        </b>
+                                        <%= list.country %>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-                <% } %>
-        </div>
+                    </a>
+                    <% } %>
+            </div>

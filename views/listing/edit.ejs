@@ -1,38 +1,82 @@
 <% layout("/layout/boilerplate.ejs") %>
     <div class="row">
         <div class="col-8 offset-2">
-            <form method="post" action="/listing/<%= listing._id %>?_method=PUT" class="m-4">
+            <form method="post" action="/listing/<%= listing._id %>?_method=PUT" class="m-4 needs-validation"
+                novalidate>
                 <h3><b>Edit</b> listing</h3>
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="listing[title]" class="form-control" id="name" value="<%= listing.title %>">
-                <br>
-                <label for="Description" class="form-label">Description</label>
-                <textarea name="listing[description]" role="5" cols="50" class="form-control"
-                    id="Description"><%= listing.description %></textarea>
-                <br>
-                <label for="Image" class="form-label">Image</label>
-                <input type="text" name="listing[image]" value="<%= listing.image.url %>" class="form-control"
-                    id="Image">
-                <br>
-                <label for="price" class="form-label">Price</label>
-                <input type="text" name="listing[price]" value="<%= listing.price %>" class="form-control" id="price">
-                <br>
 
-                <div class="row">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" name="listing[title]" class="form-control" id="name" value="<%= listing.title %>"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        This field can't be empty.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea name="listing[description]" role="5" cols="50" class="form-control" id="Description"
+                        required><%= listing.description %></textarea>
+                    <div class="valid-feedback">
+                        Description looks good.
+                    </div>
+                    <div class="invalid-feedback">
+                        Please provide a description.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Image" class="form-label">Image</label>
+                    <input type="text"class="form-control" id="Image"
+                        value="<%= listing.image.url %>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" name="listing[price]" value="<%= listing.price %>" class="form-control"
+                        id="price" required>
+                    <div class="valid-feedback">
+                        Amount accepted.
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter a valid price.
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
                     <div class="col-md-4">
                         <label for="location" class="form-label">location</label>
                         <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control"
-                            id="location">
+                            id="location" required>
+                        <div class="valid-feedback">
+                            Looks like a valid address.
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your location.
+                        </div>
                     </div>
                     <br>
                     <div class="col-md-8">
                         <label for="Country" class="form-label">Country</label>
                         <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control"
-                            id="Country">
+                            id="Country" required>
+                        <div class="valid-feedback">
+                            Country selected!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please select a country.
+                        </div>
                     </div>
                 </div>
-                <br>
                 <button class="btn">Submit</button>
             </form>
         </div>
     </div>
+
+    <!-- javascript link -->
+    <script src="/js/index.js"></script>

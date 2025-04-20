@@ -1,0 +1,11 @@
+<% layout("/layout/boilerplate.ejs") %>
+
+    <div class="alert alert-danger alert-dismissible fade show mt-4 col-8 offset-2" role="alert">
+        <strong>Something went wrong!</strong>
+        <%= err.message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <a class="nav-link m-5" href="/listing/new">
+        <button class="btn">Go to back</button>
+    </a>

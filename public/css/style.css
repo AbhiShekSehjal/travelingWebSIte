@@ -2,7 +2,6 @@ body {
     font-family: "Playfair Display", serif;
     min-height: 100vh;
     display: flex;
-    
     flex-direction: column;
 }
 
@@ -94,6 +93,22 @@ body {
     font-weight: 600 !important;
 }
 
+.newListBtn {
+    transition: all 0.8s ease !important;
+    background-color: #E63946 !important;
+    color: white !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 20px !important;
+    border-radius: 50px;
+}
+
+.newListBtn:hover {
+    background-color: #000000 !important;
+}
+
 .form-control {
     border: 1px solid rgba(128, 128, 128, 0.644) !important;
 }
@@ -107,4 +122,56 @@ body {
 
 .btn2 {
     background-color: black !important;
+}
+
+label {
+    font-weight: 600 !important;
+}
+
+.form-check-input {
+    border: 1px solid gray !important;
+}
+
+/* reviews */
+.reviews {
+    box-shadow: 1px 1px 2px gray !important;
+    margin: 0 auto;
+    margin-bottom: 45px;
+    border-radius: 0px 50px 50px 50px !important;
+    background-color: rgba(215, 250, 244, 0.701) !important;
+}
+
+.reviewBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.commentInput {
+    border: none !important;
+    box-shadow: 1px 1px 2px gray !important;
+    margin: 0 auto;
+    border-radius: 0px 50px 50px 50px !important;
+    background-color: rgba(215, 250, 244, 0.701) !important;
+}
+
+.btn4 {
+    margin-top: 45px !important;
+}
+
+/* signUpBox */
+.signUpBox {
+    background-color: rgba(215, 250, 244, 0.701);
+    border-radius: 30px;
+    padding: 15px 10px;
+}
+
+.btn3 {
+    background-color: green !important;
+}
+
+/* alert msg */
+.alert {
+    transition: all 0.3s ease !important;
 }

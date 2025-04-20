@@ -1,11 +1,26 @@
 const express = require("express");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
-const Listing = require("./model/listing");
 const path = require("path");
 const ejsMate = require("ejs-mate");
 const app = express();
 const port = 8080;
+const session = require("express-session");
+const MongoStore = require('connect-mongo');
+const flash = require("connect-flash");
+const passport = require("passport");
+const localStatergy = require("passport-local");
+const User = require("./model/user.js");
+
+const dbURL = "mongodb+srv://shek54112:4bAzj5mRqa1UT4FL@cluster0.oieuxe5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+const listingRouter = require("./router/listings.js");
+const reviewRouter = require("./router/reviews.js");
+const UserRouter = require("./router/users.js");
 
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
@@ -23,62 +38,52 @@ main().then(() => {
 })
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/traveling');
+    await mongoose.connect(dbURL);
 }
 
-//root route
-app.get("/", (req, res) => {
-    res.send("root is working")
+app.use(session({
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    },
+
+    store: MongoStore.create({
+        mongoUrl: dbURL,
+        collectionName: "session",
+    }),
+    touchAfter: 24 * 3600
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStatergy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
+    // res.locals.owner = req.user;
+    next();
 })
+app.use("/listing", listingRouter);
+app.use("/listing/:id/review", reviewRouter);
+app.use("/", UserRouter);
 
-//index route
-app.get("/listing", async (req, res) => {
-    let listing = await Listing.find({});
-    res.render("./listing/index.ejs", { listing });
-});
-
-//new route
-app.get("/listing/new", (req, res) => {
-    res.render("listing/new.ejs");
-});
-
-//create route
-app.post("/listing", async (req, res) => {
-    let listing = new Listing(req.body.listing);
-    await listing.save();
-    res.redirect(`/listing`);
-})
-
-//show route
-app.get("/listing/:id", (req, res) => {
-    let { id } = req.params;
-    Listing.findById(id).then((listing) => {
-        res.render("./listing/show.ejs", { listing })
-    });
-});
-
-//delete route
-app.delete("/listing/:id", (req, res) => {
-    let { id } = req.params;
-    Listing.findByIdAndDelete(id).then(() => {
-        res.redirect("/listing")
-    }).catch((err) => {
-        console.log(err);
-    })
-})
-
-//edit route
-app.get("/listing/:id/edit", async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    res.render("./listing/edit.ejs", { listing });
-})
-
-//update route
-app.put("/listing/:id", async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listing })
-    res.redirect(`/listing/${id}`)
+//custom error handler middleware
+app.use((err, req, res, next) => {
+    let { status = 500, message = "other error occured" } = err;
+    res.render("./listing/error.ejs", { err });
+    res.status(status);
 })
 
 //listening port
