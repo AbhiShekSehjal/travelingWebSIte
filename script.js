@@ -18,6 +18,10 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
+app.get('/', (req, res) => {
+    res.send('Hello World!'); // Or render a file
+  });
+
 const listingRouter = require("./router/listings.js");
 const reviewRouter = require("./router/reviews.js");
 const UserRouter = require("./router/users.js");
