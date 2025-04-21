@@ -1,7 +1,7 @@
 <% layout("/layout/boilerplate.ejs") %>
    
             <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-                <% for (let list of listing) {%>
+                <% for (let list of listings) {%>
                     <a href="/listing/<%= list._id %>" style="text-decoration: none;">
                         <div class="card">
                             <img src="<%= list.image.url %>" class="card-img-top" alt="listing image"

@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Listing = require("../model/listing.js");
 
 module.exports.indexRoute = async (req, res) => {
-    let listing = await Listing.find({});
-    res.render("listing/index.ejs", { listing });
+    let listings = await Listing.find({});
+    res.render("listing/index.ejs", { listings });
 }
 
 module.exports.newRoute = (req, res) => {
