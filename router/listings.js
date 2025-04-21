@@ -5,10 +5,10 @@ const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../schema.js");
 const { isLoggedIn } = require("../middleware.js");
 const { isOwner } = require("../middleware.js");
-const listingController = require("../controller/listing.js");
-const { storage } = require("../cloudConfig.js")
 const multer = require("multer");
-const upload = multer({ storage });
+const { storage } = require("../cloudConfig.js")
+const upload = multer({ storage: storage });
+const listingController = require("../controller/listing.js");
 
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
@@ -29,7 +29,7 @@ router
         wrapAsync(listingController.createRoute)),
     validateListing;
 
-    
+
 router.get("/new", isLoggedIn, listingController.newRoute);
 
 router

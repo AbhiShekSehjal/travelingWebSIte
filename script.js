@@ -42,22 +42,14 @@ async function main() {
 }
 
 app.use(session({
-    crypto: {
-        secret: process.env.SECRET,
-    },
+    secret: "yourSecretKey",
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
-    },
-
     store: MongoStore.create({
         mongoUrl: dbURL,
-        collectionName: "session",
+        collectionName: "sessions"
     }),
-    touchAfter: 24 * 3600
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
 }));
 
 app.use(passport.initialize());
