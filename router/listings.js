@@ -22,13 +22,12 @@ const validateListing = (req, res, next) => {
 
 router
     .route("/")
-    .get(wrapAsync(listingController.indexRoute))
+    .get(listingController.indexRoute)
     .post(
         isLoggedIn,
         upload.single("listing[image]"),
         wrapAsync(listingController.createRoute)),
     validateListing;
-
 
 router.get("/new", isLoggedIn, listingController.newRoute);
 

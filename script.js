@@ -1,4 +1,5 @@
 const express = require("express");
+// const Listing = require("../model/listing.js");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -17,10 +18,6 @@ const dbURL = "mongodb+srv://shek54112:4bAzj5mRqa1UT4FL@cluster0.oieuxe5.mongodb
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-
-app.get('/', (req, res) => {
-    res.send('Hello World!'); // Or render a file
-  });
 
 const listingRouter = require("./router/listings.js");
 const reviewRouter = require("./router/reviews.js");
