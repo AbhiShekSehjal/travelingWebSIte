@@ -3,7 +3,7 @@ const Listing = require("../model/listing.js");
 
 module.exports.indexRoute = async (req, res) => {
     let listing = await Listing.find({});
-    res.render("listing/index.ejs", { listing });
+    res.render("/views/listing/index.ejs", { listing });
 }
 
 module.exports.newRoute = (req, res) => {
