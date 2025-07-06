@@ -1,23 +1,24 @@
 const express = require("express");
-// const Listing = require("../model/listing.js");
+const app = express();
+const port = process.env.PORT || 9000;
+
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const path = require("path");
 const ejsMate = require("ejs-mate");
-const app = express();
-const port = process.env.PORT || 3000;
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
-const localStatergy = require("passport-local");
-const User = require("./model/user.js");
+const LocalStrategy = require("passport-local").Strategy;
 
-const dbURL = "mongodb+srv://shek54112:4bAzj5mRqa1UT4FL@cluster0.oieuxe5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const User = require("./model/user.js");
 
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
+
+const dbURL = process.env.DB_URL || "mongodb://127.0.0.1:27017/traveling";
 
 const listingRouter = require("./router/listings.js");
 const reviewRouter = require("./router/reviews.js");
@@ -29,21 +30,20 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
-
 app.engine("ejs", ejsMate);
 
 main().then(() => {
-    console.log("connected to mongoDB");
+    console.log("✅ connected to mongoDB");
 }).catch((err) => {
-    console.log(err);
-})
+    console.log("❌ MongoDB connection error:", err);
+});
 
 async function main() {
     await mongoose.connect(dbURL);
 }
 
 app.use(session({
-    secret: "yourSecretKey",
+    secret: process.env.SECRET || "fallbackSecretKey",
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -55,7 +55,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localStatergy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -65,21 +65,23 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currentUser = req.user;
-    // res.locals.owner = req.user;
     next();
-})
+});
+
 app.use("/listing", listingRouter);
 app.use("/listing/:id/review", reviewRouter);
 app.use("/", UserRouter);
 
-//custom error handler middleware
 app.use((err, req, res, next) => {
-    let { status = 500, message = "other error occured" } = err;
-    res.render("./listing/error.ejs", { err });
-    res.status(status);
-})
+    let { status = 500, message = "Other error occurred" } = err;
+    res.status(status).render("./listing/error.ejs", { err });
+});
 
-//listening port
+app.get("/", (req, res) => {
+    res.redirect("/listing");
+});
+
 app.listen(port, () => {
-    console.log("server started on port", port);
-})
+    console.log(`✅ Server started on port ${port}`);
+    console.log(`🌐 Visit: http://localhost:${port}`);
+});

@@ -10,8 +10,12 @@ router.route("/signUp")
 
 router.route("/login")
     .get(userController.loginRender)
-    .post(savedRedirectUrl, passport.authenticate("local", { failureFlash: true, failureRedirect: "/login" }), userController.login);
+    .post(
+        savedRedirectUrl,
+        passport.authenticate("local", { failureFlash: true, failureRedirect: "/login" }),
+        userController.login
+    );
 
-router.get("/logout", userController.logOut)
+router.get("/logout", userController.logOut);
 
 module.exports = router;
